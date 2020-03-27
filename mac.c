@@ -5,6 +5,7 @@
 #include "main.h"
 #include "mac.h"
 #include "reg.h"
+#include "ax_reg.h"
 #include "fw.h"
 #include "debug.h"
 
@@ -56,6 +57,7 @@ void rtw_set_channel_mac(struct rtw_dev *rtwdev, u8 channel, u8 bw,
 
 static int rtw_mac_pre_system_cfg(struct rtw_dev *rtwdev)
 {
+#if 0
 	u32 value32;
 	u8 value8;
 
@@ -96,7 +98,7 @@ static int rtw_mac_pre_system_cfg(struct rtw_dev *rtwdev)
 	value32 = rtw_read32(rtwdev, REG_WLRF1);
 	value32 &= ~BIT_WLRF1_BBRF_EN;
 	rtw_write32(rtwdev, REG_WLRF1, value32);
-
+#endif
 	return 0;
 }
 
@@ -193,7 +195,7 @@ static int rtw_pwr_seq_parser(struct rtw_dev *rtwdev,
 	int ret;
 
 	cut = rtwdev->hal.cut_version;
-	cut_mask = cut_version_to_mask(cut);
+	cut_mask = cut_version_to_mask_11ax(cut);
 	switch (rtw_hci_type(rtwdev)) {
 	case RTW_HCI_TYPE_PCIE:
 		intf_mask = BIT(2);
@@ -220,12 +222,70 @@ static int rtw_pwr_seq_parser(struct rtw_dev *rtwdev,
 	return 0;
 }
 
+static inline u8 rtw_mac_get_fw_status(struct rtw_dev *rtwdev)
+{
+	u8 fw_status;
+
+	fw_status = rtw_read8(rtwdev, R_AX_WCPU_FW_CTRL) >> 5;
+	switch (fw_status) {
+	case 0:
+		pr_info("fw status: initial state\n");
+		break;
+	case 1:
+		pr_info("fw status: download ongoing\n");
+		break;
+	case 2:
+		pr_info("fw status: checksum failed\n");
+		break;
+	case 3:
+		pr_info("fw status: security failed\n");
+		break;
+	case 6:
+		pr_info("fw status: download ready\n");
+		break;
+	case 7:
+		pr_info("fw status: init ready\n");
+		break;
+	default:
+		pr_info("fw status: rsvd\n");
+		break;
+	}
+
+	return fw_status;
+}
+
 static int rtw_mac_power_switch(struct rtw_dev *rtwdev, bool pwr_on)
 {
 	struct rtw_chip_info *chip = rtwdev->chip;
 	struct rtw_pwr_seq_cmd **pwr_seq;
+	bool cur_pwr = false;
+	u8 fw_status;
+	u8 val8;
+
+	fw_status = rtw_mac_get_fw_status(rtwdev);
+	if (fw_status == 7) {
+		pr_info("%s: TODO: LPS power active\n", __func__);
+		goto end;
+	}
+
+	val8 = rtw_read8(rtwdev, R_AX_POWER_STATE) & 0x3;
+	pr_info("%s: power_statue:0x%x\n", __func__, val8);
+	if (val8 == 0x1) {
+		pr_info("%s: MAC has been powered on already\n", __func__);
+		cur_pwr = true;
+	}
+
+	if (pwr_on && cur_pwr)
+		return -EALREADY;
+
+	pwr_seq = pwr_on ? chip->pwr_on_seq : chip->pwr_off_seq;
+	if (rtw_pwr_seq_parser(rtwdev, pwr_seq)) {
+		pr_err("%s: power sequence failed\n", __func__);
+		return -EINVAL;
+	}
+
+#if 0 // for 88x2 11ac wifi
 	u8 rpwm;
-	bool cur_pwr;
 
 	rpwm = rtw_read8(rtwdev, rtwdev->hci.rpwm_addr);
 
@@ -249,12 +309,15 @@ static int rtw_mac_power_switch(struct rtw_dev *rtwdev, bool pwr_on)
 	pwr_seq = pwr_on ? chip->pwr_on_seq : chip->pwr_off_seq;
 	if (rtw_pwr_seq_parser(rtwdev, pwr_seq))
 		return -EINVAL;
+#endif
 
+end:
 	return 0;
 }
 
 static int rtw_mac_init_system_cfg(struct rtw_dev *rtwdev)
 {
+#if 0
 	u8 sys_func_en = rtwdev->chip->sys_func_en;
 	u8 value8;
 	u32 value, tmp;
@@ -274,7 +337,7 @@ static int rtw_mac_init_system_cfg(struct rtw_dev *rtwdev)
 		value = rtw_read32(rtwdev, REG_GPIO_MUXCFG) & (~BIT_FSPI_EN);
 		rtw_write32(rtwdev, REG_GPIO_MUXCFG, value);
 	}
-
+#endif
 	return 0;
 }
 

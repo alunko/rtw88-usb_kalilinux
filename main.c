@@ -1188,6 +1188,9 @@ static int rtw_chip_efuse_enable(struct rtw_dev *rtwdev)
 		goto err;
 	}
 
+	ret = -EINVAL;
+	goto err_off;
+
 	rtw_write8(rtwdev, REG_C2HEVT, C2H_HW_FEATURE_DUMP);
 
 	wait_for_completion(&fw->completion);
@@ -1273,6 +1276,8 @@ static int rtw_chip_efuse_info_setup(struct rtw_dev *rtwdev)
 	if (ret)
 		goto out_unlock;
 
+	goto out_unlock;
+
 	ret = rtw_parse_efuse_map(rtwdev);
 	if (ret)
 		goto out_disable;
@@ -1349,13 +1354,13 @@ int rtw_chip_info_setup(struct rtw_dev *rtwdev)
 		goto err_out;
 	}
 
-	return 0;
-
 	ret = rtw_chip_efuse_info_setup(rtwdev);
 	if (ret) {
 		rtw_err(rtwdev, "failed to setup chip efuse info\n");
 		goto err_out;
 	}
+
+	return 0;
 
 	ret = rtw_chip_board_info_setup(rtwdev);
 	if (ret) {
