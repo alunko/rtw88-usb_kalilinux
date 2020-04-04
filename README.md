@@ -4,13 +4,17 @@ This driver is forked from [neojou/rtw88-usb](https://github.com/neojou/rtw88-us
 
 The driver supports Realtek USB wifi IC 88x2bu and 88x2cu, and supports at least managed (i.e. client) and monitor mode.
 
+For a backport version (backport to kernel v4.15), please check [this branch](https://github.com/borting/rtw88-usb/blob/backport-cfc1291-v4.15.0/README.md).
+
 ## Build
 
 ```console
 $ make clean
 $ make
 ```
+
 ## Installation
+
 Load driver for test:
 ```console
 $ sudo mkdir -p /lib/firmware/rtw88
@@ -29,7 +33,9 @@ $ sudo depmod -a
 $ sudo echo -e "rtw88\nrtwusb" > /etc/modules-load.d/rtwusb.conf
 $ sudo systemctl start systemd-modules-load
 ```
+
 ## General Commands
+
 Scan:
 ```console
 $ sudo iw wlanX scan
@@ -39,4 +45,5 @@ Connect to the AP without security:
 $ sudo iw wlanX connect <AP name>
 ```
 ## Known Issues
+
 * This driver doesn't support pcie. That means, loading this module will cause unpredictable results to other working Realtek wifi pcie device, especially to those laptops with Realtek wifi IC running kernel > v5.2.
