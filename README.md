@@ -6,6 +6,7 @@ Driver for 802.11ac USB Adapter with chipset:
 supports at least managed (i.e. client) and monitor mode.
 
 This driver is based on Realtek's [rtw88 driver](https://github.com/torvalds/linux/tree/master/drivers/net/wireless/realtek/rtw88) in Linux main trunk.
+
 For a backport version (backport to kernel v4.15), please check [this branch](https://github.com/borting/rtw88-usb/tree/backport-cfc1291-v4.15.0).
 
 A few known wireless cards that use this driver include 
