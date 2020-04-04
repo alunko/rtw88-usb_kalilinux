@@ -23,8 +23,8 @@ Load driver at boot:
 $ sudo mkdir -p /lib/firmware/rtw88
 $ sudo cp fw/rtw8822* /lib/firmware/rtw88/
 $ sudo mkdir /lib/modules/`uname -r`/kernel/drivers/net/wireless/realtek/rtw88
-$ sudo cp rtw88.ko /lib/modules/`uname -r`/kernel/drivers/net/wireless/
-$ sudo cp rtwusb.ko /lib/modules/`uname -r`/kernel/drivers/net/wireless/
+$ sudo cp rtw88.ko /lib/modules/`uname -r`/kernel/drivers/net/wireless/realtek/rtw88
+$ sudo cp rtwusb.ko /lib/modules/`uname -r`/kernel/drivers/net/wireless/realtek/rtw88
 $ sudo depmod -a
 $ sudo echo -e "rtw88\nrtwusb" > /etc/modules-load.d/rtwusb.conf
 $ sudo systemctl start systemd-modules-load
@@ -38,3 +38,5 @@ Connect to the AP without security:
 ```console
 $ sudo iw wlanX connect <AP name>
 ```
+## Known Issues
+* This driver doesn't support pcie. That means, loading this module will cause unpredictable results to other working Realtek wifi pcie device, especially to those laptops with Realtek wifi IC running kernel > v5.2.
