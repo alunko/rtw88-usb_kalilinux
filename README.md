@@ -4,7 +4,7 @@ This driver is forked from [neojou/rtw88-usb](https://github.com/neojou/rtw88-us
 
 The driver supports Realtek USB wifi IC 88x2bu and 88x2cu, and supports at least managed (i.e. client) and monitor mode.
 
-For a backport version (backport to kernel v4.15), please check [this branch](https://github.com/borting/rtw88-usb/blob/backport-cfc1291-v4.15.0/README.md).
+For a backport version (backport to kernel v4.15), please check [this branch](https://github.com/borting/rtw88-usb/tree/backport-cfc1291-v4.15.0).
 
 ## Build
 
