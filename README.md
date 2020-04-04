@@ -1,10 +1,18 @@
 # rtw88-usb
 
+Driver for 802.11ac USB Adapter with chipset:
+  RTL88x2BU / RTL88x2CU
+
+supports at least managed (i.e. client) and monitor mode.
+
 This driver is based on Realtek's [rtw88 driver](https://github.com/torvalds/linux/tree/master/drivers/net/wireless/realtek/rtw88) in Linux main trunk.
-
-The driver supports Realtek USB wifi IC 88x2bu and 88x2cu, and supports at least managed (i.e. client) and monitor mode.
-
 For a backport version (backport to kernel v4.15), please check [this branch](https://github.com/borting/rtw88-usb/tree/backport-cfc1291-v4.15.0).
+
+A few known wireless cards that use this driver include 
+* [Edimax EW-7822ULC](http://us.edimax.com/edimax/merchandise/merchandise_detail/data/edimax/us/wireless_adapters_ac1200_dual-band/ew-7822ulc/)
+* [ASUS AC-53 NANO](https://www.asus.com/Networking/USB-AC53-Nano/)
+* [TPLink Archer T4U v3](https://www.tp-link.com/tw/support/download/archer-t4u/)
+
 
 ## Build
 
