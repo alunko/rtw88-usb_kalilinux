@@ -10,7 +10,7 @@ The driver supports Realtek USB wifi IC 88x2bu and 88x2cu, and supports at least
 $ make clean
 $ make
 ```
-## Install
+## Installation
 Load driver for test:
 ```console
 $ sudo mkdir -p /lib/firmware/rtw88
@@ -25,6 +25,9 @@ $ sudo cp fw/rtw8822* /lib/firmware/rtw88/
 $ sudo mkdir /lib/modules/`uname -r`/kernel/drivers/net/wireless/realtek/rtw88
 $ sudo cp rtw88.ko /lib/modules/`uname -r`/kernel/drivers/net/wireless/
 $ sudo cp rtwusb.ko /lib/modules/`uname -r`/kernel/drivers/net/wireless/
+$ sudo depmod -a
+$ sudo echo -e "rtw88\nrtwusb" > /etc/modules-load.d/rtwusb.conf
+$ sudo systemctl start systemd-modules-load
 ```
 ## General Commands
 Scan:
