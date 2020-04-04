@@ -1,6 +1,6 @@
 # rtw88-usb
 
-This driver is forked from [neojou/rtw88-usb](https://github.com/neojou/rtw88-usb), which is based on Realtek's [rtw88 driver](https://github.com/torvalds/linux/tree/master/drivers/net/wireless/realtek/rtw88) in Linux main trunk.
+This driver is based on Realtek's [rtw88 driver](https://github.com/torvalds/linux/tree/master/drivers/net/wireless/realtek/rtw88) in Linux main trunk.
 
 The driver supports Realtek USB wifi IC 88x2bu and 88x2cu, and supports at least managed (i.e. client) and monitor mode.
 
@@ -46,4 +46,4 @@ $ sudo iw wlanX connect <AP name>
 ```
 ## Known Issues
 
-* This driver doesn't support pcie. That means, loading this module will cause unpredictable results to other working Realtek wifi pcie device, especially to those laptops with Realtek wifi IC running kernel > v5.2.
+* Currently, this driver is not upstreamed to Linux kernel driver rtw88 yet. That means, loading this module will cause unpredictable results to other working Realtek wifi pcie device, especially to those laptops with Realtek wifi IC running kernel > v5.2.
