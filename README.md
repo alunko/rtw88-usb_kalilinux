@@ -1,25 +1,19 @@
-# rtw88-usb
+# rtw88-usb for kalilinux
+ copy from https://github.com/neojou/rtw88-usb
 
-Driver for 802.11ac USB Adapter with chipset:
-  RTL88x2BU / RTL88x2CU
+# Description
+ modify source for error in kalilinux.
 
-supports at least managed (i.e. client) and monitor mode.
+# Supported Devices
 
-This driver is based on Realtek's [rtw88 driver](https://github.com/torvalds/linux/tree/master/drivers/net/wireless/realtek/rtw88) in Linux main trunk.
-
-For a backport version (backport to kernel v4.15), please check [this branch](https://github.com/borting/rtw88-usb/tree/backport-cfc1291-v4.15.0).
-
-A few known wireless cards that use this driver include 
-* [Edimax EW-7822ULC](http://us.edimax.com/edimax/merchandise/merchandise_detail/data/edimax/us/wireless_adapters_ac1200_dual-band/ew-7822ulc/)
-* [ASUS AC-53 NANO](https://www.asus.com/Networking/USB-AC53-Nano/)
-* [TPLink Archer T4U v3](https://www.tp-link.com/tw/support/download/archer-t4u/)
-
+* TPLink Archer T4U v3 (monitor mode)
 
 ## Build
 
 ```console
-$ make clean
-$ make
+apt install sparse
+make clean
+make
 ```
 
 ## Installation
@@ -42,17 +36,3 @@ $ sudo depmod -a
 $ sudo echo -e "rtw88\nrtwusb" > /etc/modules-load.d/rtwusb.conf
 $ sudo systemctl start systemd-modules-load
 ```
-
-## General Commands
-
-Scan:
-```console
-$ sudo iw wlanX scan
-```
-Connect to the AP without security:
-```console
-$ sudo iw wlanX connect <AP name>
-```
-## Known Issues
-
-* Currently, this driver is not upstreamed to Linux kernel driver rtw88 yet. That means, loading this module will cause unpredictable results to other working Realtek wifi pcie device, especially to those laptops with Realtek wifi IC running kernel > v5.2.
