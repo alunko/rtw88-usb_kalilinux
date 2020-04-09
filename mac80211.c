@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
 /* Copyright(c) 2018-2019  Realtek Corporation
  */
-
+#define IEEE80211_AMPDU_TX_START_IMMEDIATE 1
 #include "main.h"
 #include "sec.h"
 #include "tx.h"
