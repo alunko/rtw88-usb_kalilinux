@@ -36,3 +36,11 @@ $ sudo depmod -a
 $ sudo echo -e "rtw88\nrtwusb" > /etc/modules-load.d/rtwusb.conf
 $ sudo systemctl start systemd-modules-load
 ```
+
+# Enable Monitor Mode
+
+```
+sudo ip link set wlan0 down
+sudo iwconfig wlan0 mode monitor
+sudo ip link set wlan0 up
+````
