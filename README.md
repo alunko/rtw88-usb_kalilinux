@@ -11,7 +11,7 @@
 ## Build
 
 ```console
-apt install sparse
+apt install sparse linux-headers-amd64 build-essential
 make clean
 make
 ```
